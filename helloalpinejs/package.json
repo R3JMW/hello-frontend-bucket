@@ -1,0 +1,14 @@
+{
+  "name": "helloalpinejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "R3JMW",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "alpinejs": "^3.7.1"
+  },
+  "devDependencies": {
+    "webpack": "^5.65.0"
+  }
+}
