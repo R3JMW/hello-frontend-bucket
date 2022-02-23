@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'hlo-portal'`, () => {
+  it(`should have as title 'hellong-portal'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('hlo-portal');
+    expect(app.title).toEqual('hellong-portal');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('hlo-portal app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('hellong-portal app is running!');
   });
 });

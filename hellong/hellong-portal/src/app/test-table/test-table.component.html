@@ -1,0 +1,39 @@
+<p>test-table works!</p>
+
+<p-table [value]="values" dataKey="id" [expandedRowKeys]="expandedRows">
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 3rem"></th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Gender</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-value let-expanded="expanded">
+    <tr>
+      <td>
+        <button [pRowToggler]="value"><i [class]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i></button>
+      </td>
+      <td>{{ value.id }}</td>
+      <td>{{ value.name }}</td>
+      <td>{{ value.gender }}</td>
+      <td>{{ value.desc }}</td>
+      <td>{{ value.action }}</td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-value>
+    <ng-container *ngFor="let child of value.children; let i = index; trackBy: getChildId">
+      <tr>
+        <td></td>
+        <td [attr.data-id]="child.id">{{ child.id }}</td>
+        <td>{{ child.name }}</td>
+        <td>{{ child.gender }}</td>
+        <td>{{ child.desc }}</td>
+        <td>{{ child.action }}</td>
+      </tr>
+    </ng-container>
+  </ng-template>
+  <ng-template pTemplate="summary"> There are {{ values?.length }} People </ng-template>
+</p-table>

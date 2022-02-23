@@ -1,0 +1,247 @@
+---
+root: true
+env:
+  es6: true
+  browser: true
+ignorePatterns:
+  - 'dist/'
+  - 'temp.js'
+  - 'node_modules/'
+  - '*.d.ts'
+  - '*.json'
+  - '*/assets/*'
+
+overrides:
+  #    COMPONENT TEMPLATES
+  - files: '*.html'
+    plugins:
+      - '@angular-eslint/template'
+    parser: '@angular-eslint/template-parser'
+    extends:
+      - 'plugin:@angular-eslint/template/recommended'
+    rules:
+      ##------------------------------------- Html check style -------------------------------------
+      # @angular-eslint/template/recommended - See https://github.com/angular-eslint/angular-eslint/tree/master/packages/eslint-plugin-template/docs/rules
+      '@angular-eslint/template/accessibility-alt-text': warn
+      '@angular-eslint/template/accessibility-elements-content': error
+      '@angular-eslint/template/accessibility-label-for': off # Deprecated, use @angular-eslint/template/accessibility-label-has-associated-control
+      '@angular-eslint/template/accessibility-label-has-associated-control':
+        - warn
+        - controlComponents:
+            - 'button'
+            - 'input'
+            - 'meter'
+            - 'output'
+            - 'progress'
+            - 'select'
+            - 'textarea'
+          labelComponents:
+            - inputs:
+                - 'for'
+                - 'htmlFor'
+              selector: 'label'
+      '@angular-eslint/template/accessibility-table-scope': error
+      '@angular-eslint/template/accessibility-valid-aria': warn
+      '@angular-eslint/template/banana-in-box': error
+      '@angular-eslint/template/click-events-have-key-events': error
+      '@angular-eslint/template/conditional-complexity':
+        - error
+        - maxComplexity: 5
+      '@angular-eslint/template/cyclomatic-complexity':
+        - error
+        - maxComplexity: 5
+        # @angular-eslint@4.3.0 do not have this rule
+      #      '@angular-eslint/template/eqeqeq':
+      #        - error
+      #        - allowNullOrUndefined: false
+      '@angular-eslint/template/i18n': off # No i18n(internationalization)
+      '@angular-eslint/template/mouse-events-have-key-events': error
+      '@angular-eslint/template/no-any': error
+      '@angular-eslint/template/no-autofocus': error
+      '@angular-eslint/template/no-call-expression': error
+      '@angular-eslint/template/no-distracting-elements': error
+      '@angular-eslint/template/no-duplicate-attributes':
+        - error
+        - allowTwoWayDataBinding: false
+      '@angular-eslint/template/no-negated-async': error
+      '@angular-eslint/template/no-positive-tabindex': error
+      '@angular-eslint/template/use-track-by-function': error
+      #    TYPESCRIPT FILES (COMPONENTS, SERVICES ETC) (.ts)
+  - files: '*.ts'
+    plugins:
+      - '@typescript-eslint'
+      - '@angular-eslint'
+      #      - 'sort-class-members'
+      - 'rxjs-angular'
+      - 'eslint-plugin-jsdoc'
+      - 'eslint-plugin-import'
+    parser: '@typescript-eslint/parser'
+    parserOptions:
+      ecmaVersion: 12
+      sourceType: module
+      project:
+        - 'tsconfig.json'
+    extends:
+      - 'eslint:recommended'
+      - 'plugin:@typescript-eslint/recommended'
+      - 'plugin:@typescript-eslint/recommended-requiring-type-checking'
+      - 'plugin:@angular-eslint/recommended'
+      - 'plugin:@angular-eslint/template/process-inline-templates'
+      - 'prettier'
+    rules:
+      # ESLint rules - See https://eslint.org/docs/rules/
+      no-nested-ternary: error
+      no-multi-str: error
+      no-unused-vars: off # Use @typescript-eslint/no-unused-vars instead
+      no-use-before-define: off # Use @typescript-eslint/no-use-before-define instead
+      no-restricted-imports: off # Use @typescript-eslint/no-restricted-imports instead
+      semi:
+        - error
+        - 'always'
+      eqeqeq:
+        - error
+        - 'smart'
+      no-sequences: error
+      arrow-body-style:
+        - error
+        - 'as-needed'
+      no-bitwise: error
+      no-caller: error
+      no-console: error
+      no-alert: error
+      no-eval: error
+      no-new-wrappers: error
+      no-new-func: error
+      no-shadow:
+        - error
+        - hoist: 'all'
+      no-throw-literal: error
+      no-undef-init: error
+      no-empty: error
+      no-unused-expressions: error
+      no-var: error
+      prefer-const: error
+      radix: error
+
+      # TypeScript ESLint rules - See https://typescript-eslint.io/rules/
+      # Supplement rules for recommended rules
+      '@typescript-eslint/array-type':
+        - error
+        - default: 'array'
+          readonly: 'array'
+      '@typescript-eslint/ban-types':
+        - error
+        - extendDefaults: true
+      '@typescript-eslint/explicit-module-boundary-types': error
+      '@typescript-eslint/no-restricted-imports':
+        - error
+        - path:
+            - name: 'rxjs/Rx'
+            - name: 'rxjs/internal/operators'
+            - name: 'lodash'
+            - name: 'primeng'
+      '@typescript-eslint/no-use-before-define':
+        - error
+        - classes: false
+      '@typescript-eslint/require-array-sort-compare':
+        # If compareFunction is not supplied, all non-undefined array elements are sorted by converting them to strings and comparing strings in UTF-16 code units order.
+        # For example, "banana" comes before "cherry". In a numeric sort, 9 comes before 80, but because numbers are converted to strings, "80" comes before "9" in the Unicode order. All undefined elements are sorted to the end of the array.
+        # https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#description
+        - error
+        - ignoreStringArrays: true
+        # Override recommended rules
+      '@typescript-eslint/no-this-alias':
+        - error
+        - allowDestructuring: true
+          allowedNames:
+            - 'self'
+            - 'that'
+      '@typescript-eslint/no-unused-vars':
+        - error
+        - args: all
+          argsIgnorePattern: '^_'
+          vars: all
+          varsIgnorePattern: '^_'
+      # eslint-plugin-rxjs-angular - See https://github.com/cartant/eslint-plugin-rxjs-angular
+      'rxjs-angular/prefer-composition': error
+      # eslint-plugin-import - See https://github.com/import-js/eslint-plugin-import
+      'import/no-deprecated': error
+      'jsdoc/no-types': error
+      # eslint-plugin-sort-class-members - See https://github.com/bryanrsmith/eslint-plugin-sort-class-members
+      #      'sort-class-members/sort-class-members':
+      #        - error
+      #        - order:
+      #            - '[static-properties]'
+      #            - '[static-methods]'
+      #            - '[properties]'
+      #            - '[conventional-private-properties]'
+      #            - 'constructor'
+      #            - '[methods]'
+      #            - '[conventional-private-methods]'
+      #            - '[accessor-pairs]'
+      #            - '[everything-else]'
+      # plugin:@angular-eslint/recommended - See https://github.com/angular-eslint/angular-eslint/tree/v12.4.1/packages/eslint-plugin/docs/rules
+      '@angular-eslint/component-class-suffix': # https://angular.io/styleguide#style-02-03
+        - error
+        - suffixes:
+            - 'Component'
+      '@angular-eslint/component-max-inline-declarations': # https://angular.io/guide/styleguide#style-05-04
+        - warn
+        - template: 3
+          styles: 3
+          animations: 15
+      '@angular-eslint/component-selector':
+        # https://angular.io/guide/styleguide#style-02-07
+        # https://angular.io/guide/styleguide#style-05-02
+        # https://angular.io/guide/styleguide#style-05-03
+        - error
+        - type: 'element'
+          prefix:
+            - 'app'
+            - 'vcp'
+          style: 'kebab-case'
+      '@angular-eslint/contextual-decorator': error
+      '@angular-eslint/contextual-lifecycle': error
+      '@angular-eslint/directive-class-suffix': # https://angular.io/styleguide#style-02-03
+        - error
+        - suffixes:
+            - 'Directive'
+      '@angular-eslint/directive-selector':
+        # https://angular.io/guide/styleguide#style-02-06
+        # https://angular.io/guide/styleguide#style-02-08
+        - error
+        - type: 'attribute'
+          prefix:
+            - 'app'
+            - 'vcp'
+          style: 'camelCase'
+      '@angular-eslint/no-attribute-decorator': error # Use @Input instead
+      '@angular-eslint/no-conflicting-lifecycle': error
+      '@angular-eslint/no-empty-lifecycle-method': error
+      '@angular-eslint/no-forward-ref': warn # Allow customized form component who extends ControlValueAccessor
+      # https://angular.io/guide/styleguide#style-06-03
+      '@angular-eslint/no-host-metadata-property': error
+      '@angular-eslint/no-input-prefix': error # prefixes: [] as default
+      '@angular-eslint/no-input-rename': error # allowedNames: [] as default
+      '@angular-eslint/no-inputs-metadata-property': error # https://angular.io/guide/styleguide#style-05-12
+      '@angular-eslint/no-lifecycle-call': error
+      '@angular-eslint/no-output-native': error
+      '@angular-eslint/no-output-on-prefix': error # https://angular.io/guide/styleguide#style-05-16
+      '@angular-eslint/no-output-rename': error
+      '@angular-eslint/no-outputs-metadata-property': error # https://angular.io/guide/styleguide#style-05-12
+      '@angular-eslint/no-pipe-impure': error
+      '@angular-eslint/no-queries-metadata-property': error # https://angular.io/guide/styleguide#style-05-12
+      '@angular-eslint/pipe-prefix':
+        - error
+        - prefixes:
+            - 'app'
+            - 'vcp'
+      '@angular-eslint/prefer-on-push-component-change-detection': off
+      '@angular-eslint/prefer-output-readonly': error
+      '@angular-eslint/relative-url-prefix': error
+      '@angular-eslint/sort-ngmodule-metadata-arrays': error
+      '@angular-eslint/use-component-selector': error
+      '@angular-eslint/use-component-view-encapsulation': error
+      '@angular-eslint/use-injectable-provided-in': error
+      '@angular-eslint/use-lifecycle-interface': error # https://angular.io/guide/styleguide#style-09-01
+      '@angular-eslint/use-pipe-transform-interface': error
