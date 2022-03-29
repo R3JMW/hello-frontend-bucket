@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-test-popup',
@@ -6,10 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./test-popup.component.scss']
 })
 export class TestPopupComponent implements OnInit {
+  mmodel: MenuItem[] = [
+    { id: '1', label: 'Pop Up' },
+    { id: '2', label: 'New Tab' }
+  ];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
+  public onRefresh(): void {}
 }
+
+const t = new TestPopupComponent();
+t.onRefresh();
